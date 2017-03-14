@@ -1,28 +1,22 @@
 NAME 		= dropbox_handler
-DIR_SRC = $(DIR_HANDLER_ROOT_SRC)/dropbox/src
-DIR_INCLUDE = $(DIR_HANDLER_ROOT_SRC)/dropbox/include
-CC		= g++
-CXX		= g++
+DIR_BUILD :=  $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
+DIR_SRC := $(realpath $(DIR_BUILD)/../../src)
+DIR_INCLUDE := $(realpath $(DIR_BUILD)/../../include)
+COMP		= gcc
+LINK		= ld
 MAKEDEPEND 	= gcc -MM -MF
 
-ifeq ($(DIR_ROOT),)
-export DIR_ROOT = $(realpath $(../..))
-endif
 
-ifneq ($(PROPERTIES_SET),1)
-include $(DIR_BUILD_ROOT)/project.properties
+ifeq ($(DIR_BUILD_UTILS),)
+export DIR_BUILD_UTILS = $(realpath $(DIR_BUILD)/../../../../build_utils/linux)
 endif
-
-ifneq ($(PROPERTIES_SET),1)
-include $(DIR_BUILD_ROOT)/project.properties
-endif
+include $(DIR_BUILD_UTILS)/project.properties
 
 export DIR_INSTALL=$(DIR_GRASSROOTS_INSTALL)/handlers
 
 VPATH	= \
 	$(DIR_SRC) 
 	
-
 INCLUDES = \
 	-I$(DIR_INCLUDE) \
 	-I$(DIR_GRASSROOTS_UTIL_INC) \
@@ -49,5 +43,5 @@ LDFLAGS += \
 	-L$(DIR_DROPBOX_LIB) -ldropbox
 	
 
-include $(DIR_BUILD_ROOT)/generic_makefiles/shared_library.makefile
+include $(DIR_BUILD_UTILS)/generic_makefiles/shared_library.makefile
 
