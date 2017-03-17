@@ -1,23 +1,20 @@
-NAME 		= dropbox_handler
+NAME 		:= dropbox_handler
 DIR_BUILD :=  $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 DIR_SRC := $(realpath $(DIR_BUILD)/../../src)
 DIR_INCLUDE := $(realpath $(DIR_BUILD)/../../include)
-COMP		= gcc
-LINK		= ld
-MAKEDEPEND 	= gcc -MM -MF
 
-
-ifeq ($(DIR_BUILD_UTILS),)
-export DIR_BUILD_UTILS = $(realpath $(DIR_BUILD)/../../../../build_utils/linux)
+ifeq ($(DIR_BUILD_CONFIG),)
+export DIR_BUILD_CONFIG := $(realpath $(DIR_BUILD)/../../../../build-config/linux)
 endif
-include $(DIR_BUILD_UTILS)/project.properties
 
-export DIR_INSTALL=$(DIR_GRASSROOTS_INSTALL)/handlers
+include $(DIR_BUILD_CONFIG)/project.properties
 
-VPATH	= \
+export DIR_INSTALL := $(DIR_GRASSROOTS_INSTALL)/handlers
+
+VPATH	:= \
 	$(DIR_SRC) 
 	
-INCLUDES = \
+INCLUDES := \
 	-I$(DIR_INCLUDE) \
 	-I$(DIR_GRASSROOTS_UTIL_INC) \
 	-I$(DIR_GRASSROOTS_UTIL_INC)/containers \
@@ -31,10 +28,10 @@ INCLUDES = \
 	-I$(DIR_DROPBOX_INC) \
 	-I$(DIR_UUID_INC)
 
-SRCS 	= \
+SRCS 	:= \
 	dropbox_handler.c 
 	
-CPPFLAGS = -DDROPBOX_HANDLER_EXPORTS
+CPPFLAGS := -DDROPBOX_HANDLER_EXPORTS
 
 LDFLAGS += \
 	-L$(DIR_GRASSROOTS_HANDLE_LIB) -l$(GRASSROOTS_HANDLE_LIB_NAME) \
@@ -43,5 +40,5 @@ LDFLAGS += \
 	-L$(DIR_DROPBOX_LIB) -ldropbox
 	
 
-include $(DIR_BUILD_UTILS)/generic_makefiles/shared_library.makefile
+include $(DIR_BUILD_CONFIG)/generic_makefiles/shared_library.makefile
 
