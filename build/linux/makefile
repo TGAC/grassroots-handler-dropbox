@@ -9,6 +9,11 @@ endif
 
 include $(DIR_BUILD_CONFIG)/project.properties
 
+
+-include $(DIR_BUILD)/user.prefs
+
+
+
 export DIR_INSTALL := $(DIR_GRASSROOTS_INSTALL)/handlers
 
 VPATH	:= \
