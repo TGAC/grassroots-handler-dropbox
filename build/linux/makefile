@@ -12,6 +12,25 @@ include $(DIR_BUILD_CONFIG)/project.properties
 
 -include $(DIR_BUILD)/user.prefs
 
+# BEGIN DROPBOX CONFIGURATION
+ifneq ($(DROPBOX_HOME),)
+DIR_DROPBOX := $(DROPBOX_HOME)
+else
+DIR_DROPBOX := /usr/local
+endif
+export DIR_DROPBOX_INC := $(DIR_DROPBOX)/include
+export DIR_DROPBOX_LIB := $(DIR_DROPBOX)/lib
+# END DROPBOX CONFIGURATION
+
+# BEGIN OAUTH CONFIGURATION
+ifneq ($(OAUTH_HOME),)
+DIR_OAUTH := $(OAUTH_HOME)
+else
+DIR_OAUTH := /usr/local
+endif
+export DIR_OAUTH_INC := $(DIR_OAUTH)/include
+export DIR_OAUTH_LIB := $(DIR_OAUTH)/lib
+# END OAUTH CONFIGURATION
 
 
 export DIR_INSTALL := $(DIR_GRASSROOTS_INSTALL)/handlers
@@ -31,6 +50,7 @@ INCLUDES := \
 	-I$(DIR_GRASSROOTS_PARAMS_INC) \
 	-I$(DIR_JANSSON_INC) \
 	-I$(DIR_DROPBOX_INC) \
+	-I$(DIR_OAUTH_INC) \
 	-I$(DIR_UUID_INC)
 
 SRCS 	:= \
