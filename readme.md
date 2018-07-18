@@ -1,4 +1,4 @@
-﻿# Dropbox handler
+﻿# Dropbox handler {#dropbox_handler_guide}
 
 The Dropbox handler allows the Grassroots Server to access any files and directories stored on a [Dropbox](https://www.dropbox.com) system. Its use the [Dropbox C](https://github.com/Dwii/Dropbox-C) and [liboauth](https://sourceforge.net/projects/liboauth) libraries.
 
