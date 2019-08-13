@@ -141,7 +141,7 @@ extern "C"
  * @memberof DropboxHandler
  * @ingroup dropbox_handler_group
  */
-DROPBOX_HANDLER_API Handler *GetHandler (const UserDetails *user_p);
+DROPBOX_HANDLER_API Handler *GetHandler (const UserDetails *user_p, GrassrootsServer *grassroots_p);
 
 
 /**

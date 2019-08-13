@@ -23,7 +23,6 @@
 #include "json_util.h"
 #include "time_util.h"
 #include "filesystem_utils.h"
-#include "grassroots_config.h"
 
 
 static bool InitDropboxHandler (struct Handler *handler_p, const UserDetails *user_p);
@@ -56,7 +55,7 @@ static bool CalculateFileInformationFromDropboxHandler (struct Handler *handler_
 
 static bool FlushCachedFile (DropboxHandler *dropbox_handler_p);
 
-static drbClient *CreateClient (char *token_key_s, char *token_secret_s);
+static drbClient *CreateClient (char *token_key_s, char *token_secret_s, GrassrootsServer *grassroots_p);
 
 static bool GetLastModifiedTime (struct DropboxHandler *handler_p, const char * const filename_s, time_t *time_p);
 
@@ -65,11 +64,11 @@ static bool GetLastModifiedTime (struct DropboxHandler *handler_p, const char * 
 /**********************************/
 
 
-static drbClient *CreateClient (char *token_key_s, char *token_secret_s)
+static drbClient *CreateClient (char *token_key_s, char *token_secret_s, GrassrootsServer *grassroots_p)
 {
 	drbClient *client_p = NULL;
 	
-	const json_t *dropbox_json_p = GetGlobalConfigValue ("dropbox");
+	const json_t *dropbox_json_p = GetGlobalConfigValue (grassroots_p, "dropbox");
 
 	if (dropbox_json_p)
 		{
@@ -143,7 +142,7 @@ static drbClient *CreateClient (char *token_key_s, char *token_secret_s)
 
 
 
-Handler *GetHandler (const UserDetails *user_p)
+Handler *GetHandler (const UserDetails *user_p, GrassrootsServer *grassroots_p)
 {
 	DropboxHandler *handler_p = (DropboxHandler *) AllocMemory (sizeof (DropboxHandler));
 
@@ -163,7 +162,7 @@ Handler *GetHandler (const UserDetails *user_p)
 //					token_secret_s = GetJSONString (dropbox_p, DROPBOX_TOKEN_SECRET_S);
 //				}
 		
-			handler_p -> dh_client_p = CreateClient ((char *) token_key_s, (char *) token_secret_s);
+			handler_p -> dh_client_p = CreateClient ((char *) token_key_s, (char *) token_secret_s, grassroots_p);
 			
 			if (handler_p -> dh_client_p)
 				{
